@@ -9,14 +9,14 @@ const {
 } = ReactNative;
 const styles = require('../style');
 
-class ListItem extends Component {
+class ListItemFav extends Component {
   render () {
     return (
       <View>
         <View style={styles.li}>
-          <Text style={styles.liText}>{this.props.item.caption}</Text>
+          <Text style={styles.liText}>{this.props.item.title}</Text>
           <TouchableOpacity style={styles.buttonFav} onPress={this.props.onPress}>
-            <Text style={styles.buttonFavText}>Favorito</Text>
+            <Text style={styles.buttonFavText}>Borrar</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -24,4 +24,4 @@ class ListItem extends Component {
   }
 }
 
-export default ListItem;
+export default ListItemFav;

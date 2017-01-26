@@ -7,16 +7,20 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
   View,
   Text,
   ListView
 } from 'react-native';
 import * as firebase from 'firebase';
+import TabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
+
+// My modules
 import config from './config/config';
+const styles = require('./src/style');
 
 // Components
-import Header from './src/Components/Header';
+import SearchButton from './src/Components/SearchButton';
+import Favorites from './src/Components/Favorites';
 import ListItem from './src/Components/ListItem';
 
 // Firebase configuration
@@ -27,13 +31,17 @@ const ds = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row
 export default class FireBall extends Component {
   constructor (props) {
     super(props);
-    this.itemsRef = firebaseApp.database().ref();
+    this.itemsRef = this._getRef().child('torneos');
     this.state = {
       dataSource: ds.cloneWithRows([])
     };
   }
 
-  componentDidMount () {
+  _getRef () {
+    return firebaseApp.database().ref();
+  }
+
+  fetchData () {
     fetch('https://api.football-data.org/v1/competitions/?season=2016', {
       method: 'GET',
       headers: {
@@ -45,7 +53,6 @@ export default class FireBall extends Component {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(data)
       });
@@ -54,7 +61,7 @@ export default class FireBall extends Component {
   }
 
   _handlePress (item) {
-    console.log('ITEM', item);
+    this.itemsRef.push({ title: item.league });
   }
 
   _renderItem (item) {
@@ -69,42 +76,28 @@ export default class FireBall extends Component {
     if (this.state.dataSource.getRowCount() === 0) {
       return (
         <View style={styles.container}>
-          <Text>
-            loading....
-          </Text>
+          <SearchButton fetchData={this.fetchData.bind(this)} />
         </View>
       );
     } else {
       return (
-        <View style={styles.container}>
-          <Header />
+        <TabView
+          style={[styles.container, { marginTop: 20 }]}
+          renderTabBar={() => <DefaultTabBar />}>
           <ListView
+            tabLabel={'Torneos'}
             dataSource={this.state.dataSource}
             renderRow={this._renderItem.bind(this)}
+            style={styles.listview}
           />
-        </View>
+          <Favorites
+            firebaseApp={firebaseApp}
+            tabLabel={'Favoritos'}
+          />
+        </TabView>
       );
     }
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
-  }
-});
 
 AppRegistry.registerComponent('FireBall', () => FireBall);
