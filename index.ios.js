@@ -8,7 +8,6 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   View,
-  Text,
   ListView
 } from 'react-native';
 import * as firebase from 'firebase';
@@ -21,6 +20,7 @@ const styles = require('./src/style');
 // Components
 import SearchButton from './src/Components/SearchButton';
 import Favorites from './src/Components/Favorites';
+import PartidosFav from './src/Components/PartidosFav';
 import ListItem from './src/Components/ListItem';
 
 // Firebase configuration
@@ -92,7 +92,11 @@ export default class FireBall extends Component {
           />
           <Favorites
             firebaseApp={firebaseApp}
-            tabLabel={'Favoritos'}
+            tabLabel={'Torneos favoritos'}
+          />
+          <PartidosFav
+            firebaseApp={firebaseApp}
+            tabLabel={'Partidos favoritos'}
           />
         </TabView>
       );

@@ -6,10 +6,10 @@ import ListItemFav from './ListItemFav';
 
 const ds = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 });
 
-class Favorites extends Component {
+class PartidosFav extends Component {
   constructor (props) {
     super(props);
-    this.itemsRef = this._getRef().child('torneos');
+    this.itemsRef = this._getRef().child('partidos');
     this.state = {
       dataSource: ds.cloneWithRows([])
     };
@@ -55,7 +55,7 @@ class Favorites extends Component {
     if (this.state.dataSource.getRowCount() === 0) {
       return (
         <View style={styles.container}>
-          <Text style={styles.loading}>No hay torneos favoritos</Text>
+          <Text style={styles.loading}>No hay partidos favoritos</Text>
         </View>
       );
     } else {
@@ -71,4 +71,4 @@ class Favorites extends Component {
   }
 }
 
-export default Favorites;
+export default PartidosFav;
