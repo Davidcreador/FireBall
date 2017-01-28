@@ -24,7 +24,6 @@ class Favorites extends Component {
       // get children as an array
       var items = [];
       snap.forEach((child) => {
-        console.log('CHILD', child);
         items.push({
           title: child.val().caption,
           _key: child.key
@@ -41,7 +40,6 @@ class Favorites extends Component {
   }
 
   _renderFav (item) {
-    console.log('ITEMMMMM', item);
     return (
       <ListItemFav item={item} onPress={() => {
         this._handlePress(item);
