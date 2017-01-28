@@ -10,11 +10,10 @@ import {
   View,
   ListView
 } from 'react-native';
-import * as firebase from 'firebase';
-import TabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 
-// My modules
-import config from './config/config';
+// Firebase configuration
+import firebaseApp from './db';
+import TabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 const styles = require('./src/style');
 
 // Components
@@ -22,9 +21,6 @@ import SearchButton from './src/Components/SearchButton';
 import Favorites from './src/Components/Favorites';
 import PartidosFav from './src/Components/PartidosFav';
 import ListItem from './src/Components/ListItem';
-
-// Firebase configuration
-const firebaseApp = firebase.initializeApp(config.firebase);
 
 const ds = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 });
 
@@ -60,14 +56,14 @@ export default class FireBall extends Component {
     .done();
   }
 
-  _handlePress (item) {
-    this.itemsRef.push({ title: item.league });
+  _addItem (item) {
+    this.itemsRef.push(item);
   }
 
   _renderItem (item) {
     return (
       <ListItem item={item} onPress={() => {
-        this._handlePress(item);
+        this._addItem(item);
       }} />
     );
   }

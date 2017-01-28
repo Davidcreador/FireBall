@@ -35,10 +35,29 @@ var styles = StyleSheet.create({
     paddingBottom: 16,
     alignItems: 'center'
   },
+  liFixture: {
+    flexDirection: 'row',
+    backgroundColor: '#e0e0e0',
+    borderBottomColor: constants.primary,
+    borderColor: 'transparent',
+    borderWidth: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 8,
+    paddingBottom: 8,
+    alignItems: 'center'
+  },
   liText: {
     flex: 0.7,
     color: '#333',
     fontSize: 14
+  },
+  buttonFavTorneo: {
+    flex: 0.3,
+    backgroundColor: constants.secondary,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   buttonFav: {
     flex: 0.3,

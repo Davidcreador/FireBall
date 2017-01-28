@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ListView } from 'react-native';
 import styles from '../style';
 
-import ListItemFav from './ListItemFav';
+import ListItemFavFixture from './ListItemFavFixture';
 
 const ds = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 });
 
@@ -25,7 +25,8 @@ class PartidosFav extends Component {
       var items = [];
       snap.forEach((child) => {
         items.push({
-          title: child.val().title,
+          awayTeam: child.val().awayTeamName,
+          homeTeam: child.val().homeTeamName,
           _key: child.key
         });
       });
@@ -41,7 +42,7 @@ class PartidosFav extends Component {
 
   _renderFav (item) {
     return (
-      <ListItemFav item={item} onPress={() => {
+      <ListItemFavFixture item={item} onPress={() => {
         this._handlePress(item);
       }} />
     );
